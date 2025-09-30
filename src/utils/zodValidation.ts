@@ -158,6 +158,11 @@ const transformValue = (field: FormField, value: unknown): unknown => {
     if (field.type === 'number') return isEmpty ? (field.required ? NaN : undefined) : Number(value);
     if (field.type === 'file') return field.required ? (value || null) : value;
 
+    // For string type fields, return empty string for required fields
+    if (['text', 'textarea', 'email', 'password', 'date', 'select', 'radio'].includes(field.type)) {
+        return isEmpty ? (field.required ? '' : undefined) : value;
+    }
+
     return isEmpty ? undefined : value;
 };
 
