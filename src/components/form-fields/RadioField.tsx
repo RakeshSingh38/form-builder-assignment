@@ -58,11 +58,10 @@ export const RadioField: FC<RadioFieldProps> = ({
                             type="radio"
                             name={field.id}
                             value={option}
-                            className="w-4 h-4 focus:ring-2"
+                            className="w-4 h-4 focus:ring-2 focus:ring-blue-500"
                             style={{
                                 accentColor: 'var(--color-primary)',
-                                backgroundColor: 'var(--color-background)',
-                                borderColor: 'var(--color-border)'
+                                backgroundColor: 'var(--color-background)'
                             }}
                             checked={value === option}
                             onChange={(e) => onChange(e.target.value)}
@@ -93,3 +92,4 @@ export const RadioField: FC<RadioFieldProps> = ({
         </div>
     );
 };
+

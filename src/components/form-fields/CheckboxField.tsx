@@ -19,14 +19,19 @@ export const CheckboxField: FC<CheckboxFieldProps> = ({
   onChange,
   error,
   mode,
-  onEdit,
 }) => {
 
   const handleCheckboxChange = (option: string, checked: boolean) => {
     const currentValues = Array.isArray(value) ? value : [];
+    const allowMultiple = field.multiple === true; // Default to false (single selection)
 
     if (checked) {
-      onChange([...currentValues, option]);
+      if (allowMultiple) {
+        onChange([...currentValues, option]);
+      } else {
+        // Single selection - replace current selection
+        onChange([option]);
+      }
     } else {
       onChange(currentValues.filter((v: string) => v !== option));
     }
@@ -70,11 +75,10 @@ export const CheckboxField: FC<CheckboxFieldProps> = ({
           >
             <input
               type="checkbox"
-              className="w-4 h-4 rounded focus:ring-2"
+              className="w-4 h-4 rounded focus:ring-2 focus:ring-blue-500"
               style={{
                 accentColor: 'var(--color-primary)',
-                backgroundColor: 'var(--color-background)',
-                borderColor: 'var(--color-border)'
+                backgroundColor: 'var(--color-background)'
               }}
               checked={isChecked(option)}
               onChange={(e) => handleCheckboxChange(option, e.target.checked)}
@@ -105,3 +109,4 @@ export const CheckboxField: FC<CheckboxFieldProps> = ({
     </div>
   );
 };
+

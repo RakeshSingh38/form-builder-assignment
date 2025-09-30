@@ -107,7 +107,7 @@ export const DroppableFormArea = ({
                 <Edit3 size={12} className="lg:size-[14px]" />
                 <span>Edit</span>
               </button>
-              <button className="w-7 lg:w-9 h-7 lg:h-9 text-white rounded-lg cursor-pointer flex items-center justify-center hover:scale-110 transition-all duration-200 shadow-md hover:shadow-lg" style={{ backgroundColor: 'var(--color-error)' }} onClick={() => window.confirm(`Remove "${field.label}"?`) && onRemoveField(field.id)} title="Remove field">
+              <button className="w-7 lg:w-9 h-7 lg:h-9 text-white rounded-lg cursor-pointer flex items-center justify-center hover:scale-110 transition-all duration-200 shadow-md hover:shadow-lg" style={{ backgroundColor: 'var(--color-error)' }} onClick={() => onRemoveField(field.id)} title="Remove field">
                 <Trash2 size={12} className="lg:size-[14px]" />
               </button>
             </div>

@@ -65,7 +65,7 @@ export const BaseField = ({
 
         switch (field.type) {
             case 'textarea':
-                return <textarea {...commonProps} className={`${baseClasses} resize-y min-h-[100px] ${disabledClasses}`} value={String(value || '')} onChange={(e) => onChange(e.target.value)} placeholder={field.placeholder} rows={field.rows || 4} />;
+                return <textarea {...commonProps} className={`${baseClasses} resize-y min-h-[100px] max-h-64 ${disabledClasses}`} value={String(value || '')} onChange={(e) => onChange(e.target.value)} placeholder={field.placeholder} rows={field.rows || 4} />;
             case 'select':
                 if (field.multiple) {
                     const selectedValues = Array.isArray(value) ? value : [];
@@ -90,11 +90,11 @@ export const BaseField = ({
                             const acceptedTypes = field.accept.split(',').map(type => type.trim());
                             const fileExtension = '.' + file.name.split('.').pop()?.toLowerCase();
                             const mimeType = file.type.toLowerCase();
-                            const isValidType = acceptedTypes.some(acceptedType => {
-                                if (acceptedType.startsWith('.')) return fileExtension === acceptedType.toLowerCase();
-                                if (acceptedType.includes('/')) return mimeType === acceptedType.toLowerCase() || mimeType.startsWith(acceptedType.toLowerCase());
-                                return false;
-                            });
+                            const isValidType = acceptedTypes.some(acceptedType =>
+                                acceptedType.startsWith('.') ? fileExtension === acceptedType.toLowerCase() :
+                                    acceptedType.includes('/') ? mimeType === acceptedType.toLowerCase() || mimeType.startsWith(acceptedType.toLowerCase()) :
+                                        false
+                            );
                             if (!isValidType) {
                                 alert(`Please select a file of type: ${field.accept}`);
                                 e.target.value = '';

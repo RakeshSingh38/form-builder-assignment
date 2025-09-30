@@ -83,25 +83,20 @@ export const FormBuilder = ({ initialFormConfig = createDefaultConfig(), onSave,
         setFormConfig(validatedConfig);
     };
 
-    const handleTitleStyleChange = (titleStyle: { fontSize?: string; fontFamily?: string; fontWeight?: string; textAlign?: string }) => setFormConfig(prev => ({
-        ...prev,
-        titleStyle: {
-            fontSize: titleStyle.fontSize || prev.titleStyle?.fontSize || '2xl',
-            fontFamily: titleStyle.fontFamily || prev.titleStyle?.fontFamily || 'Inter',
-            fontWeight: titleStyle.fontWeight || prev.titleStyle?.fontWeight || 'bold',
-            textAlign: (titleStyle.textAlign as 'left' | 'center' | 'right') || prev.titleStyle?.textAlign || 'center'
-        }
-    }));
+    const createStyleChangeHandler = (styleKey: 'titleStyle' | 'descriptionStyle', defaults: { fontSize: string; fontFamily: string; fontWeight: string; textAlign: string }) =>
+        (newStyle: { fontSize?: string; fontFamily?: string; fontWeight?: string; textAlign?: string }) =>
+            setFormConfig(prev => ({
+                ...prev,
+                [styleKey]: {
+                    fontSize: newStyle.fontSize || prev[styleKey]?.fontSize || defaults.fontSize,
+                    fontFamily: newStyle.fontFamily || prev[styleKey]?.fontFamily || defaults.fontFamily,
+                    fontWeight: newStyle.fontWeight || prev[styleKey]?.fontWeight || defaults.fontWeight,
+                    textAlign: (newStyle.textAlign as 'left' | 'center' | 'right') || prev[styleKey]?.textAlign || defaults.textAlign
+                }
+            }));
 
-    const handleDescriptionStyleChange = (descriptionStyle: { fontSize?: string; fontFamily?: string; fontWeight?: string; textAlign?: string }) => setFormConfig(prev => ({
-        ...prev,
-        descriptionStyle: {
-            fontSize: descriptionStyle.fontSize || prev.descriptionStyle?.fontSize || 'base',
-            fontFamily: descriptionStyle.fontFamily || prev.descriptionStyle?.fontFamily || 'Inter',
-            fontWeight: descriptionStyle.fontWeight || prev.descriptionStyle?.fontWeight || 'normal',
-            textAlign: (descriptionStyle.textAlign as 'left' | 'center' | 'right') || prev.descriptionStyle?.textAlign || 'left'
-        }
-    }));
+    const handleTitleStyleChange = createStyleChangeHandler('titleStyle', { fontSize: '2xl', fontFamily: 'Inter', fontWeight: 'bold', textAlign: 'center' });
+    const handleDescriptionStyleChange = createStyleChangeHandler('descriptionStyle', { fontSize: 'base', fontFamily: 'Inter', fontWeight: 'normal', textAlign: 'left' });
 
     return (
         <DndProvider backend={HTML5Backend}>
