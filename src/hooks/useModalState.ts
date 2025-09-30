@@ -21,5 +21,3 @@ export const useModalState = (initialModals: ModalState) => {
 
     return { modals, openModal, closeModal, toggleModal };
 };
-
-

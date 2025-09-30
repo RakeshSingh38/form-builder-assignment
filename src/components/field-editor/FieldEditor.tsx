@@ -5,6 +5,7 @@ import { FormField } from '@/types/form';
 import { Save } from 'lucide-react';
 import { Modal, Input, Button, Checkbox, Section } from '../ui';
 import { useFieldEditor } from '../../hooks/useFieldEditor';
+import { ValidationFields } from './ValidationFields';
 
 interface FieldEditorProps {
     field: FormField;
@@ -81,8 +82,8 @@ export const FieldEditor = ({ field, isOpen, onClose, onSave }: FieldEditorProps
                     </Section>
                 )}
 
-                {/* Multiple selection for select fields */}
-                {editedField.type === 'select' && (
+                {/* Multiple selection for checkbox fields only */}
+                {editedField.type === 'checkbox' && (
                     <Checkbox
                         label="Allow multiple selections"
                         checked={editedField.multiple || false}
@@ -100,84 +101,73 @@ export const FieldEditor = ({ field, isOpen, onClose, onSave }: FieldEditorProps
                     />
                 )}
 
-                {/* Validation rules */}
-                <Section title="Validation">
-                    {/* Text and textarea validation */}
-                    {(editedField.type === 'text' || editedField.type === 'textarea') && (
-                        <>
+                {/* Validation rules will only be shown if field type has validation options */}
+                {(editedField.type === 'text' || editedField.type === 'textarea' || editedField.type === 'email' || editedField.type === 'password' || editedField.type === 'number') && (
+                    <Section title="Validation">
+                        {/* Text and textarea validation */}
+                        {(editedField.type === 'text' || editedField.type === 'textarea') && (
+                            <ValidationFields
+                                field={editedField}
+                                updateValidation={updateValidation}
+                                patternPlaceholder="e.g., ^[A-Za-z]+$"
+                                messagePlaceholder="Custom validation error message"
+                            />
+                        )}
+
+                        {/* Password validation */}
+                        {editedField.type === 'password' && (
+                            <ValidationFields
+                                field={editedField}
+                                updateValidation={updateValidation}
+                                lengthPlaceholders={{ min: "e.g., 8", max: "e.g., 128" }}
+                                patternPlaceholder="e.g., ^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$"
+                                messagePlaceholder="e.g., Password must be at least 8 characters"
+                            />
+                        )}
+
+                        {/* Email validation */}
+                        {editedField.type === 'email' && (
+                            <>
+                                <div className="p-4 rounded-lg" style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
+                                    <h4 className="font-medium mb-3" style={{ color: 'var(--color-text)', fontSize: 'var(--font-size-base)' }}>
+                                        Email Validation
+                                    </h4>
+                                    <div className="space-y-3">
+                                        <Checkbox
+                                            label="Enable email format validation"
+                                            checked={editedField.validation?.email || false}
+                                            onChange={(e) => updateValidation({ email: e.target.checked })}
+                                        />
+                                        <Input
+                                            label="Custom Email Error Message"
+                                            value={editedField.validation?.emailMessage || ''}
+                                            onChange={(e) => updateValidation({ emailMessage: e.target.value })}
+                                            placeholder="e.g., Please enter a valid email address"
+                                        />
+                                    </div>
+                                </div>
+                            </>
+                        )}
+
+                        {/* Number validation */}
+                        {editedField.type === 'number' && (
                             <div className="grid grid-cols-2 gap-4">
                                 <Input
-                                    label="Minimum Length"
+                                    label="Minimum Value"
                                     type="number"
                                     value={editedField.validation?.min || ''}
-                                    onChange={(e) => updateValidation({ min: e.target.value ? parseInt(e.target.value) : undefined })}
-                                    min={0}
+                                    onChange={(e) => updateValidation({ min: e.target.value ? parseFloat(e.target.value) : undefined })}
                                 />
                                 <Input
-                                    label="Maximum Length"
+                                    label="Maximum Value"
                                     type="number"
                                     value={editedField.validation?.max || ''}
-                                    onChange={(e) => updateValidation({ max: e.target.value ? parseInt(e.target.value) : undefined })}
-                                    min={0}
+                                    onChange={(e) => updateValidation({ max: e.target.value ? parseFloat(e.target.value) : undefined })}
                                 />
                             </div>
-                            <Input
-                                label="Pattern (Regex)"
-                                value={editedField.validation?.pattern || ''}
-                                onChange={(e) => updateValidation({ pattern: e.target.value })}
-                                placeholder="e.g., ^[A-Za-z]+$"
-                            />
-                            <Input
-                                label="Custom Error Message"
-                                value={editedField.validation?.message || ''}
-                                onChange={(e) => updateValidation({ message: e.target.value })}
-                                placeholder="Custom validation error message"
-                            />
-                        </>
-                    )}
-
-                    {/* Email validation */}
-                    {editedField.type === 'email' && (
-                        <>
-                            <div className="p-4 rounded-lg" style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
-                                <h4 className="font-medium mb-3" style={{ color: 'var(--color-text)', fontSize: 'var(--font-size-base)' }}>
-                                    Email Validation
-                                </h4>
-                                <div className="space-y-3">
-                                    <Checkbox
-                                        label="Enable email format validation"
-                                        checked={editedField.validation?.email || false}
-                                        onChange={(e) => updateValidation({ email: e.target.checked })}
-                                    />
-                                    <Input
-                                        label="Custom Email Error Message"
-                                        value={editedField.validation?.emailMessage || ''}
-                                        onChange={(e) => updateValidation({ emailMessage: e.target.value })}
-                                        placeholder="e.g., Please enter a valid email address"
-                                    />
-                                </div>
-                            </div>
-                        </>
-                    )}
-
-                    {/* Number validation */}
-                    {editedField.type === 'number' && (
-                        <div className="grid grid-cols-2 gap-4">
-                            <Input
-                                label="Minimum Value"
-                                type="number"
-                                value={editedField.validation?.min || ''}
-                                onChange={(e) => updateValidation({ min: e.target.value ? parseFloat(e.target.value) : undefined })}
-                            />
-                            <Input
-                                label="Maximum Value"
-                                type="number"
-                                value={editedField.validation?.max || ''}
-                                onChange={(e) => updateValidation({ max: e.target.value ? parseFloat(e.target.value) : undefined })}
-                            />
-                        </div>
-                    )}
-                </Section>
+                        )}
+                    </Section>
+                )}
             </div>
 
             {/* Action buttons */}

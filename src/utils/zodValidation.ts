@@ -118,6 +118,13 @@ const addRequiredValidation = (field: FormField, schema: z.ZodTypeAny): z.ZodTyp
 
     switch (field.type) {
         case 'checkbox':
+            if (field.multiple === true) {
+                return (schema as z.ZodArray<z.ZodString>).min(1, getMessage(field, `${field.label} is required`));
+            } else {
+                return field.required
+                    ? (schema as z.ZodArray<z.ZodString>).length(1, getMessage(field, `${field.label} is required`))
+                    : (schema as z.ZodArray<z.ZodString>).max(1, getMessage(field, `Please select only one option`));
+            }
         case 'select':
             return field.multiple
                 ? (schema as z.ZodArray<z.ZodString>).min(1, getMessage(field, `${field.label} is required`))
@@ -144,29 +151,14 @@ export const createZodSchema = (fields: FormField[]) => {
 };
 
 const transformValue = (field: FormField, value: unknown): unknown => {
-    const isEmpty = value === '' || value === undefined || value === null;
+    const isEmpty = !value || value === '';
 
-    switch (field.type) {
-        case 'number':
-            return isEmpty
-                ? (field.required ? NaN : undefined)
-                : (isNaN(Number(value)) ? (field.required ? NaN : undefined) : Number(value));
+    if (field.type === 'checkbox') return Array.isArray(value) ? value : [];
+    if (field.type === 'select' && field.multiple) return Array.isArray(value) ? value : [];
+    if (field.type === 'number') return isEmpty ? (field.required ? NaN : undefined) : Number(value);
+    if (field.type === 'file') return field.required ? (value || null) : value;
 
-        case 'date':
-            return isEmpty ? (field.required ? '' : undefined) : value;
-
-        case 'checkbox':
-        case 'select':
-            return field.multiple
-                ? (Array.isArray(value) ? value : (field.required ? [] : undefined))
-                : value;
-
-        case 'file':
-            return field.required ? (value || null) : value;
-
-        default:
-            return isEmpty ? (field.required ? '' : undefined) : value;
-    }
+    return isEmpty ? undefined : value;
 };
 
 export const validateFormWithZod = (fields: FormField[], formData: Record<string, unknown>): ValidationError[] => {
@@ -198,3 +190,4 @@ export const getFieldError = (fieldId: string, errors: ValidationError[]): strin
     const error = errors.find(e => e.fieldId === fieldId);
     return error ? error.message : null;
 };
+
