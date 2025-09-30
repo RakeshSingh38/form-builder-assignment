@@ -1,0 +1,47 @@
+[
+    {
+        "key": "primary",
+        "label": "Primary"
+    },
+    {
+        "key": "secondary",
+        "label": "Secondary"
+    },
+    {
+        "key": "accent",
+        "label": "Accent"
+    },
+    {
+        "key": "background",
+        "label": "Background"
+    },
+    {
+        "key": "surface",
+        "label": "Surface"
+    },
+    {
+        "key": "text",
+        "label": "Text"
+    },
+    {
+        "key": "textSecondary",
+        "label": "Text Secondary"
+    },
+    {
+        "key": "border",
+        "label": "Border"
+    },
+    {
+        "key": "success",
+        "label": "Success"
+    },
+    {
+        "key": "warning",
+        "label": "Warning"
+    },
+    {
+        "key": "error",
+        "label": "Error"
+    }
+]
+
