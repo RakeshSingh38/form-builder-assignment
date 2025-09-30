@@ -73,8 +73,8 @@ export default function LandingPage() {
                     </nav>
 
                     {/* Hero Content */}
-                    <div className="relative z-10 px-6 py-20">
-                        <div className="max-w-4xl mx-auto text-center">
+                    <div className="relative z-10 px-6 py-20 min-h-[calc(100vh-5rem)] flex items-center">
+                        <div className="max-w-4xl mx-auto text-center w-full">
 
                             <h1 className="text-5xl md:text-7xl font-bold mb-6">
                                 <span className="text-gray-800">
@@ -88,7 +88,7 @@ export default function LandingPage() {
                                 Build responsive forms easily with drag-and-drop
                             </p>
 
-                            <div className="flex justify-center mb-16">
+                            <div className="flex justify-center">
                                 <button
                                     onClick={handleGetStarted}
                                     className="px-10 py-4 bg-black text-white rounded-xl font-semibold text-lg hover:bg-gray-800 hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center justify-center"
