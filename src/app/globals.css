@@ -408,3 +408,16 @@ button:focus-visible {
     outline: none !important;
     box-shadow: 0 0 0 2px var(--color-primary) !important;
 }
+
+/* r      This removes blue focus ring from checkboxes and radio buttons, i am getting annoyed by it */
+input[type="checkbox"]:focus,
+input[type="radio"]:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+input[type="checkbox"]:focus-visible,
+input[type="radio"]:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+}

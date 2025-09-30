@@ -16,7 +16,7 @@ export const Textarea: FC<TextareaProps> = ({
     style,
     ...props
 }) => {
-    const textareaClasses = `w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 transition-colors resize-y ${className}`;
+    const textareaClasses = `w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors resize-y max-h-64 min-h-20 ${className}`;
 
     const textareaStyles = {
         backgroundColor: 'var(--color-background)',
@@ -50,5 +50,3 @@ export const Textarea: FC<TextareaProps> = ({
         </div>
     );
 };
-
-

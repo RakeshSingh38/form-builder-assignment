@@ -21,10 +21,9 @@ export const Checkbox: FC<CheckboxProps> = ({
             <div className="flex items-center">
                 <input
                     type="checkbox"
-                    className={`h-4 w-4 focus:ring-2 border rounded transition-colors ${className}`}
+                    className={`h-4 w-4 focus:ring-2 focus:ring-blue-500 border rounded transition-colors ${className}`}
                     style={{
                         accentColor: 'var(--color-primary)',
-                        borderColor: 'var(--color-border)',
                         ...style,
                     }}
                     {...props}
@@ -46,5 +45,3 @@ export const Checkbox: FC<CheckboxProps> = ({
         </div>
     );
 };
-
-
