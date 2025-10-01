@@ -1,11 +1,7 @@
 # <img src="public/logo.png" alt="JotForm Builder Logo" width="32" height="32"> JotForm Builder
 
-A powerful, intuitive drag-and-drop form builder that empowers users to create
-stunning, responsive forms with ease. Build professional forms by simply
-dragging field components from our comprehensive toolbox. Customize every aspect
-with our advanced theme editor - from colors and typography to layout and
-styling. Perfect for developers, designers, and anyone who wants to create
-beautiful forms without coding!
+A drag-and-drop form builder that lets you create beautiful forms without
+coding. Simply drag fields, customize themes, and export your forms.
 
 **Built with:** Next.js, React, TypeScript, Tailwind CSS
 
@@ -13,8 +9,6 @@ beautiful forms without coding!
 
 -   **🎨 Intuitive Drag & Drop**: Effortlessly build forms by dragging field
     components from our comprehensive toolbox
--   **👁️ Real-time Preview**: Instantly switch between edit and preview modes to
-    see your form come to life
 -   **🎭 Advanced Theme System**: Customize colors, fonts, typography, and
     styling with our powerful theme editor
 -   **✅ Smart Validation**: Built-in validation for email, numbers, required
@@ -45,8 +39,7 @@ beautiful forms without coding!
 
 ### 💾 **Import/Export System**
 
--   **JSON Export**: Export form configurations as downloadable JSON files
--   **JSON Import**: Import previously saved form configurations
+-   **JSON Import and Export**: Import or Export form configurations as downloadable JSON files
 -   **Save Functionality**: Save forms with custom handlers
 -   **File Management**: Clean filename generation and validation
 
@@ -55,7 +48,6 @@ beautiful forms without coding!
 -   **Mobile-First**: Optimized for all screen sizes
 -   **Touch-Friendly**: Drag and drop works on mobile devices
 -   **Adaptive Layout**: Components adjust to different viewport sizes
--   **Modern UI**: Clean, professional interface with smooth animations
 
 ## 🚀 Getting Started
 
@@ -110,12 +102,12 @@ beautiful forms without coding!
 
 ```
 src/
-├── app/                    # Next.js app directory
+├── app/                   # Next.js app directory
 │   ├── globals.css        # Global styles and CSS variables
 │   ├── layout.tsx         # Root layout component
 │   └── page.tsx           # Main page component
 ├── components/            # React components
-│   ├── drag-drop/        # Drag and drop functionality
+│   ├── drag-drop/         # Drag and drop functionality
 │   │   ├── DraggableField.tsx
 │   │   └── DroppableFormArea.tsx
 │   ├── field-editor/     # Field editing modal
@@ -175,4 +167,4 @@ Changes are saved automatically.
 
 ---
 
-**Made for Assignment Submission Infoware**
+**Made for Infoware Assignment Submission**
