@@ -81,6 +81,28 @@ export const FormBuilder = ({ initialFormConfig = createDefaultConfig(), onSave,
             settings: importedConfig.settings || formConfig.settings
         };
         setFormConfig(validatedConfig);
+
+        // Applying imported theme
+        if (importedConfig.theme) {
+            updateTheme(importedConfig.theme);
+
+            // Handling all available theme types
+            switch (importedConfig.theme.id) {
+                case 'light':
+                    setThemeMode('light');
+                    break;
+                case 'dark':
+                    setThemeMode('dark');
+                    break;
+                case 'modern':
+                case 'classic':
+                case 'custom':
+                default:
+                    // for any custom themes, set to custom mode
+                    setThemeMode('custom');
+                    break;
+            }
+        }
     };
 
     const createStyleChangeHandler = (styleKey: 'titleStyle' | 'descriptionStyle', defaults: { fontSize: string; fontFamily: string; fontWeight: string; textAlign: string }) =>
